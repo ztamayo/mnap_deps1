@@ -42,8 +42,8 @@ RUN apt-get update && \
                                                 octave-struct \
                                                 octave-optim && \
 # Install workbench
-    apt-get install -yq --no-install-recommends --allow-unauthenticated connectome-workbench && \
-    apt-get clean && \
+#   apt-get install -yq --no-install-recommends --allow-unauthenticated connectome-workbench && \
+#    apt-get clean && \
 # Clear apt cache and other empty folders
 #USER root
     apt-get clean && \
