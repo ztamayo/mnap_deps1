@@ -12,34 +12,26 @@
 
 FROM ztamayo/mnap_deps0:latest 
 
-
-
 RUN apt-get update && \
-    apt-get install -yq --no-install-recommends pkg-config \
-                                                tree \
-                                                vim \
-                                                zip
-
+    apt-get install -yq --no-install-recommends pkg-config && \
+    apt-get clean && \
 # Install Python 2.7
-RUN apt-get install --no-install-recommends -y python2.7-dev && \
+    apt-get install --no-install-recommends -y python2.7-dev && \
     apt-get install --no-install-recommends -y python-pip build-essential && \
+    apt-get clean && \
     pip install --upgrade virtualenv && \
-    pip install --upgrade setuptools
-
+    pip install --upgrade setuptools && \
 # Install Python packages
-RUN pip install numpy pydicom scipy nibabel
-
+    pip install numpy pydicom scipy nibabel && \
 # Install Octave and R
-RUN apt-get install -yq --no-install-recommends --allow-unauthenticated r-base \
-                                                                        octave 
-
+    apt-get install -yq --no-install-recommends --allow-unauthenticated r-base \
+                                                                        octave && \
 # Install R package
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
-RUN Rscript -e "install.packages('ggplot2')"
-
-
+    echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile && \
+    Rscript -e "install.packages('ggplot2')" && \
+    apt-get clean && \
 # Install Octave packages
-RUN apt-get install -yq --no-install-recommends octave-general \
+    apt-get install -yq --no-install-recommends octave-general \
                                                 octave-control \
                                                 octave-image \
                                                 octave-nan \
@@ -48,14 +40,13 @@ RUN apt-get install -yq --no-install-recommends octave-general \
                                                 octave-statistics \
                                                 octave-miscellaneous \
                                                 octave-struct \
-                                                octave-optim 
-
+                                                octave-optim && \
 # Install workbench
-RUN apt-get install -yq --no-install-recommends --allow-unauthenticated connectome-workbench
-
+    apt-get install -yq --no-install-recommends --allow-unauthenticated connectome-workbench && \
+    apt-get clean && \
 # Clear apt cache and other empty folders
-USER root
-RUN apt-get clean && \
+#USER root
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /boot /media /mnt /srv && \
     rm -rf ~/.cache/pip
 
