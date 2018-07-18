@@ -13,7 +13,7 @@
 FROM ztamayo/mnap_deps0:latest 
 
 RUN apt-get update && \
-    apt-get install -yq --no-install-recommends pkg-config && \
+    apt-get install -yq --no-install-recommends pkg-config tmux && \
     apt-get clean && \
 # Install Python 2.7
     apt-get install --no-install-recommends -y python2.7-dev && \
