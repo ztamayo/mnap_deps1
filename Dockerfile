@@ -31,7 +31,8 @@ RUN apt-get update && \
     Rscript -e "install.packages('ggplot2')" && \
     apt-get clean && \
 # Install Octave packages
-    apt-get install -yq --no-install-recommends octave-general \
+    apt-get install -yq --no-install-recommends liboctave-dev \
+                                                octave-general \
                                                 octave-control \
                                                 octave-image \
                                                 octave-nan \
