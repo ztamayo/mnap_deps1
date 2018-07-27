@@ -15,9 +15,7 @@ FROM ztamayo/mnap_deps0:latest
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update && \
     apt-get install -yq --no-install-recommends pkg-config \
-                                                tmux \
-                                                libssl1.0.0 \
-                                                libssl-dev && \
+                                                tmux && \
     apt-get clean && \
 # Install Python 2.7
     apt-get install --no-install-recommends -y python2.7-dev && \
