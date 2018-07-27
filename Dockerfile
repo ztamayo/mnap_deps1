@@ -12,8 +12,12 @@
 
 FROM ztamayo/mnap_deps0:latest 
 
-RUN apt-get update && \
-    apt-get install -yq --no-install-recommends pkg-config tmux && \
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
+    apt-get update && \
+    apt-get install -yq --no-install-recommends pkg-config \
+                                                tmux \
+                                                libssl1.0.0 \
+                                                libssl-dev && \
     apt-get clean && \
 # Install Python 2.7
     apt-get install --no-install-recommends -y python2.7-dev && \
@@ -29,7 +33,6 @@ RUN apt-get update && \
 # Install R package
     echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile && \
     Rscript -e "install.packages('ggplot2')" && \
-    apt-get clean && \
 # Install Octave packages
     apt-get install -yq --no-install-recommends liboctave-dev \
                                                 octave-general \
@@ -42,11 +45,7 @@ RUN apt-get update && \
                                                 octave-miscellaneous \
                                                 octave-struct \
                                                 octave-optim && \
-# Install workbench
-#   apt-get install -yq --no-install-recommends --allow-unauthenticated connectome-workbench && \
-#    apt-get clean && \
 # Clear apt cache and other empty folders
-#USER root
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /boot /media /mnt /srv && \
     rm -rf ~/.cache/pip
